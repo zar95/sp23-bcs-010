@@ -1,0 +1,106 @@
+.header{display: flex;
+    /* justify-content: center; */
+    border: 4px solid rgb(51, 53, 221);
+    background-color: orange;
+}
+.logo{
+    /* border: 2px solid rgb(116, 196, 250); */
+    /* display: block; */
+    height: 100px;
+    width: 250px;
+}
+.h1{
+color: rgb(46, 98, 119);
+
+}
+.ul1{
+/* border: 2px solid black;     */
+margin-left: 40%
+}
+.sidebar
+{
+    background-color: violet);
+    margin-left: 10px;
+    margin-top: 25px;
+    display: inline-table;
+    height: 500px;
+    width: 250px;
+border: 4px solid violet;
+}
+.s1{margin-left: 20px;
+border: 2px solid indigo;
+ text-align: center;   
+height: 200px; 
+width: 200px; 
+}
+.s2{
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 2px solid indigo;
+    text-align: center;   
+   height: 100px; 
+   width: 200px; ;
+   
+}
+.s3{
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 2px solid indigo;
+    text-align: center;   
+   height: 50px; 
+   width: 200px; ;
+    
+}
+.rdiv{
+    background-color: aquamarine;
+    margin-left: 80px;
+border: 4px solid black;
+margin-top: 30px;
+    display: inline-table;
+    height: 500px;
+    width: 900px;
+/* border: 4px solid violet; */
+}
+.title{
+    margin-top: 30px;
+    margin-left: 20px;
+    border: 2px solid indigo;
+     text-align: center;   
+    height: 220px; 
+    width: 850px;   
+
+}
+.index{
+    margin-top: 40px;
+    margin-left: 20px;
+    border: 2px solid indigo;
+     text-align: center;   
+    height: 230px; 
+    width: 850px;   
+
+}
+.h1t{
+text-align: left;
+
+}
+.cont{margin-top: 50px;
+    text-align: center;
+}
+.item{
+    list-style: none;
+    margin-top: 80px;
+}
+.footer{
+    background-color: orange;
+    margin-top: 20px;
+    border: 2px solid blue;
+    height: 100px;
+    width: 100%;
+    display: inline-block;
+}
+.fot{
+    text-align: center;
+}
+.back{
+    background-color: rgb(197, 236, 236);
+}
