@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+.container{
+    padding-top: 20px;
+    padding: 20px;
+    background-color:beige;
+    margin-top: 110px;
+}

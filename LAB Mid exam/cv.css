@@ -1,0 +1,97 @@
+.cv {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 360px;
+    margin: 40px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .cv-header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .cv-header h1 {
+    color: rgb(212, 87, 42);
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+  
+  .personal-info, .contact-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 10px auto;
+  }
+  
+  .personal-info h2, 
+  .contact-info h2, 
+  .education h2, 
+  .skills h2, 
+  .experience h2 {
+    color: rgb(212, 87, 42);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .personal-info ul, .contact-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .personal-info li, .contact-info li {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+
+  .education, .skills, .experience {
+    position: relative;
+    cursor: pointer;
+    width: 300px;
+    margin: 10px auto;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .education-item, .skills-item, .experience-item {
+    position: absolute;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    width: 280px;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  
+  .education:hover .education-item,
+  .skills:hover .skills-item,
+  .experience:hover .experience-item {
+    display: flex;
+  }
+  
+  .education-item a, 
+  .skills-item a, 
+  .experience-item a {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .education-item a:hover, 
+  .skills-item a:hover, 
+  .experience-item a:hover {
+    color: rgb(212, 87, 42);
+  }
+  
