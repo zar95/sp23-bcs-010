@@ -4,6 +4,9 @@ var ProductModel = require('./models/Product.model.js');
 const app = express();
 const port = 3000;
 app.use(express.json());
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 mongoose.connect("mongodb://localhost:27017/labtest", {
     useNewUrlParser: true,
@@ -37,6 +40,11 @@ mongoose.connect("mongodb://localhost:27017/labtest", {
  // post data to db and entertain post request from postman
   app.post("/api/products", async (req, res) => {
     let data = req.body;
+    if (Array.isArray(data)) {
+      const records = await ProductModel.insertMany(data);
+      return res.send(records)
+    }
+
     let record = new ProductModel(data);
     await record.save();
     res.send(record);
@@ -59,6 +67,10 @@ mongoose.connect("mongodb://localhost:27017/labtest", {
     res.send(record);
    });
 
+   app.get('/products', (req, res) => {
+    res.sendFile(__dirname + '/public/products.html');
+  });
+  
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
