@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - E-commerce</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <ul>
+                    <li><a href="#" id="nav-dashboard" class="active">Dashboard</a></li>
+                    <li><a href="#" id="nav-add-product">Add Product</a></li>
+                    <li><a href="/products" target="_blank">View Website</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <header>
+                <h1 id="page-title">Dashboard</h1>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view">
+                <div class="product-list-header">
+                    <div class="col-name">Name</div>
+                    <div class="col-price">Price</div>
+                    <div class="col-category">Category</div>
+                    <div class="col-actions">Actions</div>
+                </div>
+                <div id="product-list-body" class="product-list-container">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add/Edit Product View -->
+            <section id="product-form-view" style="display: none;">
+                <h2 id="form-title">Add New Product</h2>
+                <form id="product-form">
+                    <input type="hidden" id="product-id">
+                    <div class="form-group">
+                        <label for="name">Product Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" id="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" id="category" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image URL</label>
+                        <input type="text" id="image" placeholder="http://example.com/image.jpg">
+                    </div>
+                    <button type="submit" class="btn-primary">Save Product</button>
+                    <button type="button" class="btn-secondary" id="cancel-btn">Cancel</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+
+</html>
