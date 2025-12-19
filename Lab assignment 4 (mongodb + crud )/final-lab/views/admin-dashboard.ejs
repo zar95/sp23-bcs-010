@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - E-commerce</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin" id="nav-dashboard" class="active">Dashboard</a></li>
+                    <li><a href="/admin/add-product" id="nav-add-product">Add Product</a></li>
+                    <li><a href="/admin/orders" id="nav-orders">Orders</a></li>
+                    <li><a href="/products">View Website</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <header>
+                <h1 id="page-title">Dashboard</h1>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view">
+                <div class="product-list-header">
+                    <div class="col-name">Name</div>
+                    <div class="col-price">Price</div>
+                    <div class="col-category">Category</div>
+                    <div class="col-actions">Actions</div>
+                </div>
+                <div id="product-list-body" class="product-list-container">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/admin.js"></script>
+</body>
+
+</html>

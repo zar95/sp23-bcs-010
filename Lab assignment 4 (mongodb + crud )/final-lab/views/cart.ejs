@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="brand-logo">MyShop</div>
+        <nav class="nav-links">
+            <a href="/products">Back to Shop</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="text-center">Your Shopping Cart</h1>
+
+        <div class="cart-container" id="cart-container">
+            <!-- Cart items will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function fetchCart() {
+            fetch('/api/cart')
+                .then(res => res.json())
+                .then(cart => {
+                    renderCart(cart);
+                })
+                .catch(err => console.error('Error fetching cart:', err));
+        }
+
+        function renderCart(cart) {
+            const container = document.getElementById('cart-container');
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart text-center" style="padding: 40px; color: #7f8c8d;">Your cart is empty</div>';
+                return;
+            }
+
+            let total = 0;
+            let html = '';
+
+            cart.forEach(item => {
+                total += parseFloat(item.price);
+                html += `
+                    <div class="cart-item">
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <span class="item-price">$${item.price}</span>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart('${item._id}')">Remove</button>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div class="cart-total">
+                    Total: $${total.toFixed(2)}
+                </div>
+                <div style="text-align: right; margin-top: 20px;">
+                    <a href="/checkout" class="btn-checkout">Proceed to Checkout</a>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function removeFromCart(id) {
+            fetch('/api/cart/remove', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            })
+                .then(res => res.json())
+                .then(cart => {
+                    renderCart(cart);
+                })
+                .catch(err => console.error('Error removing item:', err));
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchCart);
+    </script>
+</body>
+
+</html>
