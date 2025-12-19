@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders - E-commerce</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <style>
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .orders-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .status-pending {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .status-confirmed {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .status-cancelled {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+
+        .btn-confirm {
+            background-color: #27ae60;
+        }
+
+        .btn-cancel {
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin" id="nav-dashboard">Dashboard</a></li>
+                    <li><a href="/admin/add-product" id="nav-add-product">Add Product</a></li>
+                    <li><a href="/admin/orders" id="nav-orders" class="active">Orders</a></li>
+                    <li><a href="/products" target="_blank">View Website</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <header>
+                <h1 id="page-title">Manage Orders</h1>
+            </header>
+
+            <section id="orders-view">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (orders.length===0) { %>
+                            <tr>
+                                <td colspan="6" style="text-align: center;">No orders found.</td>
+                            </tr>
+                            <% } else { %>
+                                <% orders.forEach(order=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= order._id %>
+                                        </td>
+                                        <td>
+                                            <%= order.customerName %><br>
+                                                <small>
+                                                    <%= order.customerEmail %>
+                                                </small>
+                                        </td>
+                                        <td>$<%= order.totalAmount.toFixed(2) %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(order.createdAt).toLocaleDateString() %>
+                                        </td>
+                                        <td>
+                                            <span class="status-<%= order.status.toLowerCase() %>">
+                                                <%= order.status %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <% if (order.status==='Pending' ) { %>
+                                                <form action="/admin/orders/update-status" method="POST"
+                                                    style="display: inline;">
+                                                    <input type="hidden" name="orderId" value="<%= order._id %>">
+                                                    <input type="hidden" name="status" value="Confirmed">
+                                                    <button type="submit"
+                                                        class="action-btn btn-confirm">Confirm</button>
+                                                </form>
+                                                <form action="/admin/orders/update-status" method="POST"
+                                                    style="display: inline;">
+                                                    <input type="hidden" name="orderId" value="<%= order._id %>">
+                                                    <input type="hidden" name="status" value="Cancelled">
+                                                    <button type="submit" class="action-btn btn-cancel">Cancel</button>
+                                                </form>
+                                                <% } else { %>
+                                                    -
+                                                    <% } %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
