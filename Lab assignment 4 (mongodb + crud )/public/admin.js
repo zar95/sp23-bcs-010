@@ -9,23 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const formTitle = document.getElementById('form-title');
     const cancelBtn = document.getElementById('cancel-btn');
 
-    // Navigation
-    navDashboard.addEventListener('click', (e) => {
-        e.preventDefault();
-        showDashboard();
-    });
+    // Cancel button
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            window.location.href = '/admin';
+        });
+    }
 
-    navAddProduct.addEventListener('click', (e) => {
-        e.preventDefault();
-        showAddProductForm();
-    });
-
-    cancelBtn.addEventListener('click', () => {
-        showDashboard();
-    });
-
-    // Load Products
-    fetchProducts();
+  
+    if (productListBody) {
+        fetchProducts();
+    }
 
     function fetchProducts() {
         fetch('/api/products')
@@ -37,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderProducts(products) {
+        if (!productListBody) return;
         productListBody.innerHTML = '';
         products.forEach(product => {
             const row = document.createElement('div');
@@ -53,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             productListBody.appendChild(row);
         });
 
-        // Add event listeners for edit and delete buttons
+       
         document.querySelectorAll('.btn-edit').forEach(btn => {
             btn.addEventListener('click', () => editProduct(btn.dataset.id));
         });
@@ -63,63 +58,72 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Form Submission
-    productForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const id = document.getElementById('product-id').value;
-        const data = {
-            name: document.getElementById('name').value,
-            price: document.getElementById('price').value,
-            description: document.getElementById('description').value,
-            category: document.getElementById('category').value,
-            image: document.getElementById('image').value
-        };
+   
+    if (productForm) {
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('product-id').value;
+            const data = {
+                name: document.getElementById('name').value,
+                price: document.getElementById('price').value,
+                description: document.getElementById('description').value,
+                category: document.getElementById('category').value,
+                image: document.getElementById('image').value
+            };
 
-        if (id) {
-            // Update
-            fetch(`/api/products/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(res => res.json())
-                .then(() => {
-                    alert('Product updated successfully');
-                    showDashboard();
-                    fetchProducts();
+            if (id) {
+               
+                fetch(`/api/products/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 })
-                .catch(err => console.error('Error updating product:', err));
-        } else {
-            // Create
-            fetch('/api/products', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(res => res.json())
-                .then(() => {
-                    alert('Product created successfully');
-                    showDashboard();
-                    fetchProducts();
+                    .then(res => res.json())
+                    .then(() => {
+                        alert('Product updated successfully');
+                        window.location.href = '/admin';
+                    })
+                    .catch(err => console.error('Error updating product:', err));
+            } else {
+                
+                fetch('/api/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 })
-                .catch(err => console.error('Error creating product:', err));
-        }
-    });
+                    .then(res => res.json())
+                    .then(() => {
+                        alert('Product created successfully');
+                        window.location.href = '/admin';
+                    })
+                    .catch(err => console.error('Error creating product:', err));
+            }
+        });
+    }
 
     function editProduct(id) {
-        fetch(`/api/products/${id}`)
-            .then(res => res.json())
-            .then(product => {
-                document.getElementById('product-id').value = product._id;
-                document.getElementById('name').value = product.name;
-                document.getElementById('price').value = product.price;
-                document.getElementById('description').value = product.description;
-                document.getElementById('category').value = product.category || '';
-                document.getElementById('image').value = product.image || '';
+        window.location.href = `/admin/add-product?id=${id}`;
+    }
 
-                showForm('Edit Product');
-            })
-            .catch(err => console.error('Error fetching product details:', err));
+  
+    if (productForm) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (id) {
+            fetch(`/api/products/${id}`)
+                .then(res => res.json())
+                .then(product => {
+                    document.getElementById('product-id').value = product._id;
+                    document.getElementById('name').value = product.name;
+                    document.getElementById('price').value = product.price;
+                    document.getElementById('description').value = product.description;
+                    document.getElementById('category').value = product.category || '';
+                    document.getElementById('image').value = product.image || '';
+                    if (formTitle) formTitle.textContent = 'Edit Product';
+                    if (pageTitle) pageTitle.textContent = 'Edit Product';
+                })
+                .catch(err => console.error('Error fetching product details:', err));
+        }
     }
 
     function deleteProduct(id) {
@@ -132,35 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetchProducts();
                 })
                 .catch(err => console.error('Error deleting product:', err));
-        }
-    }
-
-    // View Switching Helpers
-    function showDashboard() {
-        dashboardView.style.display = 'block';
-        productFormView.style.display = 'none';
-        pageTitle.textContent = 'Dashboard';
-        navDashboard.classList.add('active');
-        navAddProduct.classList.remove('active');
-    }
-
-    function showAddProductForm() {
-        productForm.reset();
-        document.getElementById('product-id').value = '';
-        showForm('Add New Product');
-    }
-
-    function showForm(title) {
-        dashboardView.style.display = 'none';
-        productFormView.style.display = 'block';
-        pageTitle.textContent = title;
-        formTitle.textContent = title;
-        navDashboard.classList.remove('active');
-        // If it's "Add Product", highlight the nav, otherwise (Edit) don't highlight add
-        if (title === 'Add New Product') {
-            navAddProduct.classList.add('active');
-        } else {
-            navAddProduct.classList.remove('active');
         }
     }
 });

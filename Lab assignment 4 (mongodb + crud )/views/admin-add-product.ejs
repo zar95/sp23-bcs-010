@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - E-commerce</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
 </head>
 
 <body>
@@ -15,32 +15,19 @@
             <h2>Admin Panel</h2>
             <nav>
                 <ul>
-                    <li><a href="#" id="nav-dashboard" class="active">Dashboard</a></li>
-                    <li><a href="#" id="nav-add-product">Add Product</a></li>
-                    <li><a href="/products" target="_blank">View Website</a></li>
+                    <li><a href="/admin" id="nav-dashboard">Dashboard</a></li>
+                    <li><a href="/admin/add-product" id="nav-add-product" class="active">Add Product</a></li>
+                    <li><a href="/products">View Website</a></li>
                 </ul>
             </nav>
         </aside>
         <main class="content">
             <header>
-                <h1 id="page-title">Dashboard</h1>
+                <h1 id="page-title">Add New Product</h1>
             </header>
 
-            <!-- Dashboard View -->
-            <section id="dashboard-view">
-                <div class="product-list-header">
-                    <div class="col-name">Name</div>
-                    <div class="col-price">Price</div>
-                    <div class="col-category">Category</div>
-                    <div class="col-actions">Actions</div>
-                </div>
-                <div id="product-list-body" class="product-list-container">
-                    <!-- Products will be loaded here -->
-                </div>
-            </section>
-
             <!-- Add/Edit Product View -->
-            <section id="product-form-view" style="display: none;">
+            <section id="product-form-view">
                 <h2 id="form-title">Add New Product</h2>
                 <form id="product-form">
                     <input type="hidden" id="product-id">
@@ -70,7 +57,7 @@
             </section>
         </main>
     </div>
-    <script src="admin.js"></script>
+    <script src="/admin.js"></script>
 </body>
 
 </html>
